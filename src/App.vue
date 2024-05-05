@@ -27,7 +27,7 @@
       <p>{{ price[i] }} 만원</p>
       <button @click="increase(i)">허위매물신고</button>
       <span>신고수 : {{ 신고수[i] }} </span>
-
+      <!-- just test -->
     </div>
   </div>
 </template>
