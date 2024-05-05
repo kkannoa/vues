@@ -30,7 +30,7 @@ export default {
     name : 'ModalComponent',
     data(){
         return{
-            month : 1,
+            month : 3,
         }
     },
     watch : {
@@ -54,7 +54,14 @@ export default {
             console.log(this.month)
             
         }
-    }
+    },
+    updated(){
+      if(this.month<3){
+        alert('최소 3개월 이상 입력하세요~');
+        this.month=3;
+      }
+      
+    },
 }
 </script>
 

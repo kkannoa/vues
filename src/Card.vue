@@ -27,8 +27,10 @@ export default {
             this.$emit('openModal', this.a.id)
         }
         
-    }
+    },
+    
 }
+
 </script>
 
 <style>

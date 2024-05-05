@@ -7,17 +7,21 @@
  -->
   <div>
     
-    
-    <Modal @closeModal="모달창열렸니=false;" :원룸들="원룸들" :누른거="누른거" :모달창열렸니="모달창열렸니" />
-    
+    <transition name="fade">
+      <Modal @closeModal="모달창열렸니=false;" :원룸들="원룸들" :누른거="누른거" :모달창열렸니="모달창열렸니" />
+    </transition>
     <div class="menu">
       <a v-for="(menu) in menus" :key=menu.id>{{ menu.name }}</a>
       <a>Products</a>
       <a>About</a>
     </div>
 
-    <Discount/>
+    <Discount ref="Discount" />
 
+    <button @click="priceSortLow">낮은가격순정렬버튼</button>
+    <button @click="priceSortHigh">높은가격순정렬버튼</button>
+    <button @click="koreanSort">가나다순정렬버튼</button>
+    <button @click="sortBack"> 되돌리기</button>
     <Card @openModal="모달창열렸니=true; 누른거=$event" :a="원룸들[i]" v-for="(a , i) in 원룸들" :key=i></Card>
 
     
@@ -34,10 +38,13 @@ import Modal from './Modal.vue';
 import Card from './Card.vue';
 
 
+
 export default {
   name: 'App',
   data() {
     return {
+      showDiscount : true,
+      원룸들오리지널 :  [...data],
       오브젝트 : {name : 'kim', age: 20},
       원룸들 : data,
       모달창열렸니: false,
@@ -53,8 +60,33 @@ export default {
     increase(index) {
       this.신고수[index] += 1
     },
-    
+    priceSortLow(){
+      this.원룸들.sort(function(a,b){
+        return a.price-b.price
+      })
+    },
+    priceSortHigh(){
+      this.원룸들.sort(function(a,b){
+        return b.price-a.price
+        })
+    },
+    koreanSort(){
+      this.원룸들.sort(function(a,b){
+        return a.title.localeCompare(b.title);
+      })
+    },
+    sortBack(){
+      this.원룸들 = [...this.원룸들오리지널];
+    },
   },
+
+  /* mounted() {
+    setInterval(() => {
+      const discountInstance = this.$refs.Discount;
+      discountInstance.discountPersent--;
+    }, 1000);
+  }, */
+
   components: {
     Discount,
     Modal,
@@ -94,6 +126,35 @@ div {
 }
 
 
+.fade-leave-from {
+  opacity: 1;
+}
+.fade-leave-active {
+  transition: all 1s;
+}
+.fade-leave-to {
+  opacity: 0;
+}
+
+
+.fade-enter-from {
+  transform: translateY(-1000px);
+}
+.fade-enter-active {
+  transition: all 1s;
+}
+.fade-enter-to {
+  transform: translateY(0px);
+}
+
+.start {
+  opacity: 0;
+  transition: all 1s;
+}
+
+.end {
+  opacity: 1;
+}
 
 
 </style>
